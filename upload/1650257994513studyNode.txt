@@ -1,0 +1,15 @@
+HRMS->payslip->create and read html to pdf format:
+----------   -----------    ---------- ------ -------  -------  -- ------  ----------
+const pdff  = require('html-pdf')
+const fs = require('fs')
+var pdf = require("pdf-creator-node");
+const Handlebars = require('handlebars');
+const puppeteer = require('puppeteer');
+// const PDFDocument = require('pdfkit')
+// const docu = require('pdf-lib')
+const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
+const { first, inRange } = require('lodash');
+const htmldoc = require('html-to-docx')
+var toPdf = require("custom-soffice-to-pdf")
+
+

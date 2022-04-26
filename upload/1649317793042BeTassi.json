@@ -1,0 +1,1080 @@
+{
+	"info": {
+		"_postman_id": "7c927801-6e8f-4681-bc30-7b805c433601",
+		"name": "BeTassi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "superAdmin",
+			"item": [
+				{
+					"name": "superAdminRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"super\",\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/superAdmin/superAdminRegister",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"superAdmin",
+								"superAdminRegister"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "superAdminLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/superAdmin/superAdminLogin",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"superAdmin",
+								"superAdminLogin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "registerForUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"gowsi\",\r\n   \"email\":\"gowsalya339@gmail.com\",\r\n   \"password\":\"12345\",\r\n   \"contact\":\"9080473316\",\r\n   \"address\":\"345-ggg street,madurai\",\r\n   \"location\":\"madurai\",\r\n   \"selectVehicle\":\"car\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/register",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"gowsalya339@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUserList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/getAllUserList",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"getAllUserList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleUserDetails",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjMxOGZjYzQyYzAwMjBiY2MzOWYxMmMiLCJpYXQiOjE2NDc0MTcyMTh9.6UpiflAsRfw6UNKt96YYi08ZY8JuS-gl0xQcoT-MkwA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/getSingleUserDetails",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"getSingleUserDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUserProfile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjMxOGZjYzQyYzAwMjBiY2MzOWYxMmMiLCJpYXQiOjE2NDc0MTcyMTh9.6UpiflAsRfw6UNKt96YYi08ZY8JuS-gl0xQcoT-MkwA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"gowsi.k\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/updateUserProfile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"updateUserProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserDetails",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjMxOGZjYzQyYzAwMjBiY2MzOWYxMmMiLCJpYXQiOjE2NDc0MTcyMTh9.6UpiflAsRfw6UNKt96YYi08ZY8JuS-gl0xQcoT-MkwA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/deleteUserProfile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"deleteUserProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userBookingCab",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjMyMTEzM2VhMGVlODE5NDk2Y2VjYjciLCJpYXQiOjE2NDc0NDg0MzR9.FYBpViXKt9GvGhdVLpyUqjX4yhtoRVYHPSHj-0WiMeg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pickUpLocation\":{\r\n        \"pickUpLatitude\":78.0926572,\r\n        \"pickUpLongitude\":9.9207577\r\n    },\r\n    \"dropLocation\":{\r\n        \"dropLatitude\":9.9207577,\r\n        \"dropLongitude\":78.0926572\r\n    },\r\n    \"contact\":\"9080473316\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/user/userBookToCab",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"user",
+								"userBookToCab"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "driverDetails",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMzMGI0ZDYwNWI0NDUyZTZkMzMxMTUiLCJpYXQiOjE2NDc1MTI0MzV9.PpdwyhDUKx5A3ESlP7Kw8PV-nksxz9f2Gu3IKMvOqx0",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "companyName",
+									"value": "long travel",
+									"type": "default"
+								},
+								{
+									"key": "candidateName",
+									"value": "raj",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "raj@gmail.com",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "default"
+								},
+								{
+									"key": "contact",
+									"value": "9786737102",
+									"type": "default"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": "/C:/Users/APPLE/Pictures/Screenshots/Screenshot (1).png"
+								},
+								{
+									"key": "drivingLicense",
+									"value": "VIP592IssacK1995",
+									"type": "default"
+								},
+								{
+									"key": "licenseValidIn",
+									"value": "04.08.2032",
+									"type": "default"
+								},
+								{
+									"key": "typeOfVechicle",
+									"value": "Car",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/register",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "driverLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"raj@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllDriverList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/getAllDriverList",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"getAllDriverList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ownerGetOurOwnEmployeeList",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMzMGI0ZDYwNWI0NDUyZTZkMzMxMTUiLCJpYXQiOjE2NDc1MTMxMTB9.fEw8V5inYseO5XDEGMAjdEZDrIvYPjdSmbTE4F1yo5Y",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/ownerGetOurOwnEmployeeList",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"ownerGetOurOwnEmployeeList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleDriverDetails",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMzMGY2NGMwZjdhNzIwM2NjMjgzNGMiLCJpYXQiOjE2NDc1MTQ1NzB9.DTjTC3kipq_urgj--dF9oibw4dQpc4tahyDrIOqt3Vs",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/getSingleDriverData",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"getSingleDriverData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDriverProfile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMzMGY2NGMwZjdhNzIwM2NjMjgzNGMiLCJpYXQiOjE2NDc1MTQ1NzB9.DTjTC3kipq_urgj--dF9oibw4dQpc4tahyDrIOqt3Vs",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"candidateName\":\"raj.k\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/updateDriverProfile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"updateDriverProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDriverProfile",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMzMGY2NGMwZjdhNzIwM2NjMjgzNGMiLCJpYXQiOjE2NDc1MTQ1NzB9.DTjTC3kipq_urgj--dF9oibw4dQpc4tahyDrIOqt3Vs",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/driverDetails/deleteDriverProfile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"driverDetails",
+								"deleteDriverProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "owner",
+			"item": [
+				{
+					"name": "ownerRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "companyName",
+									"value": "long travel",
+									"type": "default"
+								},
+								{
+									"key": "presidentName",
+									"value": "nisha",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "tine@gmail.com",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "default"
+								},
+								{
+									"key": "contact",
+									"value": "9080473316",
+									"type": "default"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": "/C:/Users/APPLE/Pictures/Screenshots/Screenshot (5).png"
+								},
+								{
+									"key": "typeOfVehicle",
+									"value": "car",
+									"type": "default"
+								},
+								{
+									"key": "location",
+									"value": "madurai",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "345-xxx street,kova",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/owner/register",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"owner",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ownerLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"nishagowsi@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/owner/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"owner",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOwnerList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/owner/getAllOwnerList",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"owner",
+								"getAllOwnerList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleOwnerDetails",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMxN2QxMDdkZTRhMWQwZTI3NTI4ZmMiLCJpYXQiOjE2NDc0MTA1NjV9.bQbVedkQjWZ_lUFPcI62tOGtkabQUd5sYWD7NFsWsDo",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/owner/getSingleOwnerDetails",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"owner",
+								"getSingleOwnerDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOwnerProfileDetails",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMxN2QxMDdkZTRhMWQwZTI3NTI4ZmMiLCJpYXQiOjE2NDc0MTA1NjV9.bQbVedkQjWZ_lUFPcI62tOGtkabQUd5sYWD7NFsWsDo",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"companyName\":\"street-rider\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/owner/updateOwnerProfile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"owner",
+								"updateOwnerProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOwnerProfileDetails",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjMxN2QxMDdkZTRhMWQwZTI3NTI4ZmMiLCJpYXQiOjE2NDc0MTA1NjV9.bQbVedkQjWZ_lUFPcI62tOGtkabQUd5sYWD7NFsWsDo",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/owner/deleteOwnerProfile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"owner",
+								"deleteOwnerProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vehicleDetails",
+			"item": [
+				{
+					"name": "addVehicleDetailsForOwner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjM5YTk3Y2RhYjI4NTI2NzVkNzRjOGYiLCJpYXQiOjE2NDgxMDgyOTF9.9trugVmMoiai0zJ4S1p8JuTU0vCk_TPq9tgL8xab30c",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "noOfVehicle",
+									"value": "2",
+									"type": "default"
+								},
+								{
+									"key": "vehicleImage",
+									"type": "file",
+									"src": "/C:/Users/APPLE/Pictures/Screenshots/Screenshot (4).png"
+								},
+								{
+									"key": "vehicleDetails",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/vehicleDetails/addVehicleDetails",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"vehicleDetails",
+								"addVehicleDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ownerGetOurOwnVehicleList",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjM5YTk3Y2RhYjI4NTI2NzVkNzRjOGYiLCJpYXQiOjE2NDgxMDgyOTF9.9trugVmMoiai0zJ4S1p8JuTU0vCk_TPq9tgL8xab30c",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/vehicleDetails/ownerGetOurOwnVehicleList",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"vehicleDetails",
+								"ownerGetOurOwnVehicleList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllVehicleList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/vehicleDetails/getAllVehicleList",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"vehicleDetails",
+								"getAllVehicleList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleVehicleDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/vehicleDetails/getSingleVehicleDetails/:id",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"vehicleDetails",
+								"getSingleVehicleDetails",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "623c3d03e79f93e70812cbbd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateVehicleDetails",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjM5YTk3Y2RhYjI4NTI2NzVkNzRjOGYiLCJpYXQiOjE2NDgxMDgyOTF9.9trugVmMoiai0zJ4S1p8JuTU0vCk_TPq9tgL8xab30c",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"noOfVehicle\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/vehicleDetails/updateVehicleDetails",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"vehicleDetails",
+								"updateVehicleDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteVehicleDetails",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjM5YTk3Y2RhYjI4NTI2NzVkNzRjOGYiLCJpYXQiOjE2NDgxMDgyOTF9.9trugVmMoiai0zJ4S1p8JuTU0vCk_TPq9tgL8xab30c",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://192.168.0.112:6600/BeeTassi/vehicleDetails/deleteVehicleDetails",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"112"
+							],
+							"port": "6600",
+							"path": [
+								"BeeTassi",
+								"vehicleDetails",
+								"deleteVehicleDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

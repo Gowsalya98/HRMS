@@ -1,0 +1,51 @@
+HRMS->payslip->create and read html to pdf format:
+----------   -----------    ---------- ------ -------  -------  -- ------  ----------
+const pdff  = require('html-pdf')
+const fs = require('fs')
+var pdf = require("pdf-creator-node");
+const Handlebars = require('handlebars');
+const puppeteer = require('puppeteer');
+// const PDFDocument = require('pdfkit')
+// const docu = require('pdf-lib')
+const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
+const { first, inRange } = require('lodash');
+const htmldoc = require('html-to-docx')
+var toPdf = require("custom-soffice-to-pdf")
+---------------------------------------------------------------------------------------------------------------------------
+
+How to read excel file and create and write the data from excel file:
+------  -- -------- --------- ----- ------ ----------- ------ -------- ----- ---------- ------ ------   ------
+
+ var workbook = xlsx.utils.book_new();
+        var ws = xlsx.utils.json_to_sheet(req.body);
+        xlsx.utils.book_append_sheet(workbook, ws, 'Attendence');
+        xlsx.writeFile(workbook, 'HRMS_Bio.xlsx', {type: 'file'});
+
+        var wb = xlsx.readFile('HRMS_Bio.xlsx')
+        var ws = wb.Sheets['Attendence']
+        const data = xlsx.utils.sheet_to_json(ws)
+   
+        attendence.create(data,(err,result)=>{
+            if(err) throw err
+            res.status(200).send({message:result})
+        })
+SAMPLE OR REFERENCE CODE:
+------------- ------ -------------------- ---------
+
+var workbook = xlsx.utils.book_new();
+var data = [
+    {name:"John", city: "Seattle"},
+    {name:"Mike", city: "Los Angeles"},
+    {name:"Zach", city: "New York"}
+];
+var ws = xlsx.utils.json_to_sheet(data);
+xlsx.utils.book_append_sheet(workbook, ws, "Results");
+xlsx.writeFile(workbook, 'out.xlsx', {type: 'file'});
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+

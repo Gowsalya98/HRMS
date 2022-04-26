@@ -1,0 +1,109 @@
+					Notes for node projects
+					----- --- ---- --------- -------------
+
+youtube=>how to manage user role.
+
+COFIRESPACE=>interest buyer to create(body{userid,spaceid}).
+	   =>report buyer to create(body{userid,spaceid}).
+	   =>payment details to create(body{spaceid}).
+
+
+JSON.stringify-->it's convert javascript object or value into json string.
+JSON.parse-->it's convert string into javascript object.
+
+(===)--->exact equal to values and types(string(a)===string(b))
+
+flambee heroku=>https://flamebee.herokuapp.com/
+gowsalya access token for flamebee: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
+
+*git push*:
+ --- ---------
+.git push https://<GITHUB_ACCESS_TOKEN>@github.com/<GITHUB_USERNAME>/<REPOSITORY_NAME>.git
+
+OTPKEY for betassi project: SLAea84yPOZ0fqdcvYMtlKgoFb5uQkpsrTDjmNhJ2En93I1i6UFdoPe6LkK0QiMsSm2qRbahY9yXtrGZ
+OTPKEY for HRMS and Flamebee: C0215gs8VqGaH3LJvEZYRTNMDfPFArkhxm9leBO6jdwSWotQ4pcwdCAfSxWenH2KXNp4Vl9OB3v7GjRZ
+
+-----------------------
+* Date:formula *
+var myDate = new Date();
+req.body.createdAt=myDate.toLocaleString();
+------------------------
+How to Subtract Days from Date in JavaScript:
+
+   1.setDate()
+   2.getDate()
+subtract date to get before 3 days:
+
+		let d = new Date();
+		console.log('Today is: ' + d.toLocaleString());
+		d.setDate(d.getDate() - 3);
+		console.log('3 days ago was: ' + d.toLocaleString());
+
+setDate to -1 will return the last day of the month:
+
+		let d = new Date();
+		console.log('Today is: ' + d.toLocaleString());
+		d.setDate(-1);
+		console.log(d.toLocaleString());
+
+----------------------------------------
+* object declared *
+1.userData:{
+        type:Object
+    },
+    propertyData:{
+        type:Object
+    }
+find and req.body.userData=data
+find and req.body.propertyData=datas
+
+2. f ={data,datas,result}
+res.send(f)
+
+
+vscode token for github (firekey): vscode://vscode.github-authentication/did-authenticate?windowid=4&code=46aaf4ec8a77f0e9751d&state=d62d5953-fe3b-4052-a5dd-e6cc030fcf1c 
+--------------------------------------------------------------------------------
+how to convert address to lattitude and longitude:
+
+* npm install node-geocoder *
+
+let nodeGeocoder = require('node-geocoder');
+ 
+let options = {
+  provider: 'openstreetmap'
+};
+ 
+let geoCoder = nodeGeocoder(options);
+geoCoder.geocode('city name or street name')
+  .then((res)=> {
+    console.log(res);
+  })
+  .catch((err)=> {
+    console.log(err);
+  });
+------------------------------------------------------------------------------------------------------------
+how to get kilometers distance between  pickup and drop lattitude longitude point:
+
+
+ calcCrow(9.91051,78.1158,9.4541596,77.557643).toFixed(1);
+   
+    function calcCrow(lat1, lon1, lat2, lon2) 
+    {
+      var R =  6371; //earth radius
+      var dLat = toRad(lat2-lat1);
+      var dLon = toRad(lon2-lon1);
+      var lat1 = toRad(lat1);
+      var lat2 = toRad(lat2);
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c;
+      return d;
+    }
+    // Converts numeric degrees to radians
+    function toRad(Value) 
+    {
+        return Value * Math.PI / 180;
+    }
+-------------------------------------------------------------------------------------------------------------------
+
