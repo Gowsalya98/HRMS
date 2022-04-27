@@ -104,7 +104,7 @@ const forgotPassword = async (req, res) => {
         if (req.body.otp != null) {
             sendOtp.findOne({ otp: req.body.otp }, async (err, datas) => {
                 console.log("line 106", datas)
-                if (!datas.organizationDetails.role=='employee') {
+                if (!datas.employeeDetails.role=='employee') {
                     employee.findOne({ email: req.body.email }, async (err, data) => {
                         console.log("line 109", data)
                         if (data) {

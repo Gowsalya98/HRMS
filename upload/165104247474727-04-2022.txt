@@ -1,0 +1,3 @@
+1).Organization details page.
+2).Organization details Update page.
+3).Organization details Delete page.
