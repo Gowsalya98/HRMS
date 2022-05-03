@@ -12,7 +12,7 @@ router.get('/rejectLeave/:id',leaveControll.rejectLeave)
 router.get('/pendingLeaveDetailsCount',leaveControll.pendingLeaveDetailsCount)
 
 router.get('/employeeViewOurLeaveApplicationStatus/:key',leaveControll.employeeViewOurLeaveApplicationStatus)
-router.get('/ownerViewEmployeeLeaveStatus/:key',leaveControll.ownerViewEmployeeLeaveStatus)
+router.get('/adminViewEmployeeLeaveStatus/:key',leaveControll.adminViewEmployeeLeaveStatus)
 
 router.get('/employeeViewLeaveApplication/:id',leaveControll.employeeViewLeaveApplication)
 

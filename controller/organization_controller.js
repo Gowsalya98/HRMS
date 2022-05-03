@@ -52,9 +52,9 @@ const createOrganization = async (req, res) => {
 }
 const getOrganization = (req, res) => {
     try {
-        
         organization.find( { deleteFlag: 'false' }, (err, data) => {
-            if (err) { res.status(400).send({ message: 'invalid' }) }
+            if (err) { 
+                res.status(400).send({ message: 'invalid' }) }
             else {
                 console.log("line 38",data)
                 res.status(200).send({ message: data })
@@ -104,7 +104,6 @@ const deleteOrganization = (req, res) => {
     try {
         console.log('line 78',req.params.id);
         organization.findOne({_id:req.params.id, deleteFlag: 'false' }, (err, datas) => {
-            console.log("line 80",datas)
             if (datas) {
                 organization.findOneAndUpdate({_id:req.params.id}, {$set:{deleteFlag:"true"}},{ returnOriginal: false }, (err, data) => {
                     if (err) {
@@ -114,6 +113,8 @@ const deleteOrganization = (req, res) => {
                         res.status(200).send({ message: 'data deleted successfully', data })
                     }
                 })
+            }else{
+                res.status(400).send({message:'invalid id'})
             }
         })
 

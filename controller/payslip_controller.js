@@ -1,4 +1,5 @@
-const {payslip}=require('../model/payslip_model')
+const mongoose=require('mongoose')
+const {payslip,updatedPayslip}=require('../model/payslip_model')
 const {employee}=require('../model/employee_model')
 const {organization}=require('../model/organization_model')
 const pdf=require('html-pdf')
@@ -40,58 +41,100 @@ const createPayslip=(req,res)=>{
     }
 }
 
-const getAllPayslipDetails=(req,res)=>{
+// const getAllPayslipDetails=(req,res)=>{
+//     try{
+//         organization.findOne({role:'admin'},(err,datas)=>{
+//             if(datas){
+//             payslip.find({},(err,data)=>{
+//                 if(err)throw err
+//                 console.log('line 46',data)
+//                 res.status(200).send(data)
+//             })
+//         }else{res.status(400).send('unauthorized person')}
+//         })
+        
+//     }catch(err){
+//         res.status(500).send({message:err.message})
+//     }
+// }
+
+// const getSinglePaySlipDetails=async(req,res)=>{
+//     try{
+//         console.log('line 62',(parseInt(req.params.id)))
+//       const datas=await employee.aggregate([{$match:{$and:[{identityNumber:(parseInt(req.params.id))},{deleteFlag:"false"}]}}])
+//       console.log('line 64',datas); 
+//       if(datas!=null){
+//           console.log('line 66',datas[0].identityNumber);
+//       const data=await payslip.aggregate([{$match:{'EmployeeDetails.identityNumber':datas[0].identityNumber}}])
+//             if(data){
+//             console.log('line 67',data)
+//             res.status(200).send(data)
+//             }else{ res.status(400).send('invalid id')}
+//     }else{
+//         res.status(400).send('invalid id')
+//     }
+//     }catch(err){
+//         res.status(500).send({message:err.message})
+//     }
+// }
+
+const updatePaySlipDetails=(req,res)=>{
     try{
-        organization.findOne({role:'admin'},(err,datas)=>{
+        payslip.findOne({_id:req.params.id},(err,datas)=>{
+            console.log('line 85',datas)
             if(datas){
-            payslip.find({},(err,data)=>{
-                if(err)throw err
-                console.log('line 46',data)
-                res.status(200).send(data)
-            })
-        }else{res.status(400).send('unauthorized person')}
+                payslip.findOneAndUpdate({_id:req.params.id},{$set:req.body},{new:true},(err,result)=>{
+                    if(err)throw err
+                    console.log('line 89',result);
+                    req.body.payslipDetails=result
+                    updatedPayslip.create(req.body,(err,data)=>{
+                        if(data){
+                        console.log('line 92',data)
+                        res.status(200).send({message:'successfull',data})
+                        }else{
+                            res.status(400).send({message:'unsuccessfull'})
+                        }
+                    })  
+                })
+               
+            }else{res.status(400).send({message:'invalid id'})}
         })
+    }catch(err){
+        res.status(500).send({message:err.message})
+    }
+}
+
+const getSingleUpdatePaySlipDetails=async(req,res)=>{
+    try{
+       const data=await updatedPayslip.aggregate([{$match:{"_id":new mongoose.Types.ObjectId(req.params.id)}}])
+            if(data!=null){
+                console.log('line 105',data)
+                res.status(200).send({data:data})
+            }else{
+                res.status(400).send({message:'invalid id',data:[]})
+            }
         
     }catch(err){
         res.status(500).send({message:err.message})
     }
 }
 
-const getSinglePaySlipDetails=async(req,res)=>{
+const getAllUpdatedPaySlipDetails=async(req,res)=>{
     try{
-        console.log('line 62',(parseInt(req.params.id)))
-      const datas=await employee.aggregate([{$match:{$and:[{identityNumber:(parseInt(req.params.id))},{deleteFlag:"false"}]}}])
-      console.log('line 64',datas); 
-      if(datas!=null){
-          console.log('line 66',datas[0].identityNumber);
-      const data=await payslip.aggregate([{$match:{'EmployeeDetails.identityNumber':datas[0].identityNumber}}])
-            if(data){
-            console.log('line 67',data)
-            res.status(200).send(data)
-            }else{ res.status(400).send('invalid id')}
-    }else{
-        res.status(400).send('invalid id')
-    }
-    }catch(err){
-        res.status(500).send({message:err.message})
-    }
-}
-
-const updatePaySlipDetails=(req,res)=>{
-    try{
-        const adminToken=req.headers.authorization
-        console.log('line 73',adminToken)
-        payslip.findOne({_id:req.params.id},(err,datas)=>{
-            if(err)throw err
-            console.log('line 76',datas)
-            if(datas){
-                payslip.findOneAndUpdate({_id:req.params.id},req.body,{new:true},(err,data)=>{
-                    if(err)throw err
-                    console.log('line 80',data)
-                    res.status(200).send(data)
-                })  
-            }
-        })
+        const datas=await organization.findOne({role:'admin',deleteFlag:'false'})
+        if(datas){
+            updatedPayslip.find({},(err,data)=>{
+                if(data){
+                    console.log('line 130',data)
+                    res.status(200).send({data:data})
+                }else{
+                    res.status(400).send({message:'data not found',data:[]})
+                }
+            })
+        }else{
+            res.status(400).send({message:'unauthorized person'})
+        }
+        
     }catch(err){
         res.status(500).send({message:err.message})
     }
@@ -99,12 +142,11 @@ const updatePaySlipDetails=(req,res)=>{
 
 const pdfCreater=(req,res)=>{
     try{
-      
-        payslip.findOne({_id:req.params.id,deleteFlag:"false"},(err,num)=>{
+        updatedPayslip.findOne({_id:req.params.id,deleteFlag:"false"},(err,num)=>{
             if(num){
                 console.log('line 98',num)
                 let data1={"companyName":num.companyName,"companyLogo":num.companyLogo,"identityNumber":num.EmployeeDetails.identityNumber,"name":num.EmployeeDetails.name,
-                "designation":{"designationName":num.EmployeeDetails.designation.designationName},"monthAndYear":num.EmployeeDetails.createdAt,"lopDays":num.lopDays,
+                "designation":{"designationName":num.EmployeeDetails.designation.designationName},"monthAndYear":num.EmployeeDetails.createdAt,"lopDays":num.loseOfPay,
                 "basicPay":num.basicPay,"employeeShareOfPF":num.employeeShareOfPF,"HRA":num.HRA,"employeeShareOfESI":num.employeeShareOfESI,
                 "medicalAllowance":num.medicalAllowance,"employerShareOfPF":num.employerShareOfPF,"conveyanceAllowance":num.conveyanceAllowance,
                 "employerShareOfESI":num.employerShareOfESI,"cityCompensatory":num.cityCompensatory,"leaveDeductions":num.leaveDeductions,
@@ -138,5 +180,5 @@ const pdfCreater=(req,res)=>{
 }
 
 
-module.exports={createPayslip,getAllPayslipDetails,pdfCreater,
-    getSinglePaySlipDetails,updatePaySlipDetails}
+module.exports={createPayslip,pdfCreater,updatePaySlipDetails,getSingleUpdatePaySlipDetails,
+    getAllUpdatedPaySlipDetails}

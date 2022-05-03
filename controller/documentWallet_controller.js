@@ -4,12 +4,12 @@ const jwt=require('jsonwebtoken')
 
 const createDocumentWallet=(req,res)=>{
     try{
-        console.log('line 8',(typeof(req.body.identityNumber)));
-        employee.findOne({identityNumber:req.body.identityNumber,deleteFlag:'false'},(err,datas)=>{
-            if(err){res.status(400).send({message:'invalid identityNumber'})}
-            else{
-            console.log('line 11',datas)
-            req.body.employeeDetails=datas
+        // documentWallet.countDocuments({ identityNumber: req.body.identityNumber },async(err, num) => {
+        //     console.log("line 8",num)
+        //     if (num == 0){
+    employee.findOne({identityNumber:req.body.identityNumber,deleteFlag:'false'},(err,datas)=>{
+                if(datas){
+                req.body.employeeDetails=datas
             console.log('line 13',req.body.employeeDetails)
 
             const date=new Date();
@@ -26,15 +26,20 @@ const createDocumentWallet=(req,res)=>{
 
             documentWallet.create(req.body, (err, data) => {
                 if (err) {
-                    res.status(400).send({ message: err })
+                    res.status(400).send({ message: 'your data not created something wrong' })
                 }
                 else {
                     console.log('line 32',data)
                     res.status(200).send({ message: 'created successfully', data })
                 }
             })
-        }
-        })
+        }else{res.status(400).send({message:'please check your identity number'})}
+            })
+            
+        // }else{
+        //     res.status(400).send({message:'your data already exist'})
+        // }
+        // })
     }catch(err){
         res.status(500).send({message:err.message})
     }
@@ -42,7 +47,8 @@ const createDocumentWallet=(req,res)=>{
 
 const imageUploadForDocumentWallet=(req,res)=>{
     try{
-        req.body.certificate = `http://192.168.0.112:9022/upload/${req.file.filename}`
+        
+            req.body.certificate = `http://192.168.0.112:9022/upload/${req.file.filename}`
         documentImage.create(req.body,(err,data)=>{
             if(err)throw err
             console.log('line 46',data)
@@ -55,6 +61,8 @@ const imageUploadForDocumentWallet=(req,res)=>{
 
 const getAllWalletData=(req,res)=>{
     try{
+        const adminToken=jwt.decode(req.headers.authorization)
+        const id=adminToken.userid
         documentWallet.find({deleteFlag:"false"},(err,data)=>{
             if(err)throw err
             console.log('line 58',data)
@@ -69,14 +77,17 @@ const updateDocumentWallet=(req,res)=>{
     try{
         console.log('line 30',req.params.id);
         documentWallet.findOne({_id:req.params.id,deleteFlag:'false'},(err,datas)=>{
-            if(err){throw err}
-            console.log('line 33',datas)
             if(datas){
-                documentWallet.findOneAndUpdate({_id:req.params.id},req.body,{new:true},(err,data)=>{
-                    if(err)throw err
+                documentWallet.findOneAndUpdate({_id:req.params.id},{$set:req.body},{new:true},(err,data)=>{
+                    if(err){
+                        res.status(400).send({message:'something wrong data not update'})
+                    }else{
                     console.log('line 48',data)
                     res.status(200).send({message:'documents updated successfully',data})
+                    }
                 })
+            }else{
+                res.status(400).send({message:'invalid id'})
             }
         })
     }catch(err){
@@ -87,14 +98,17 @@ const deleteDocumentWallet=(req,res)=>{
     try{
         console.log('line 59',req.params.id);
         documentWallet.findOne({_id:req.params.id,deleteFlag:'false'},(err,datas)=>{
-            if(err){throw err}
-            console.log('line 62',datas)
             if(datas){
                 documentWallet.findOneAndUpdate({_id:req.params.id},{$set:{deleteFlag:'true'}},{returnOriginal:false},(err,data)=>{
-                    if(err)throw err
+                    if(err){
+                        res.status(400).send({message:'something wrong data not deleted'}) 
+                    }else{
                     console.log('line 66',data)
                     res.status(200).send({message:'documents deleted successfully',data})
+                    }
                 })
+            }else{
+                res.status(400).send({message:'invalid id'}) 
             }
         }) 
     }catch(err){

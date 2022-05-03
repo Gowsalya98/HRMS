@@ -89,7 +89,6 @@ const getAllAttendance = (req,res)=>{
         console.log('line 78',req.query);
         const token = jwt.decode(req.headers.authorization)
         const verifyId = token.userid
-        console.log("line 23",verifyId)
         organization.findOne({_id:verifyId},(err,datas)=>{
             if(datas!=null){
             attendance.find({},(err,data)=>{
@@ -230,7 +229,7 @@ const updateAttendanceDetails=(req,res)=>{
     try{
         attendance.findOne({_id:req.params.id,deleteFlag:'false'},(err,datas)=>{
             if(datas){
-                attendance.findOneAndUpdate({_id:req.params.id},req.body,{new:true},(err,data)=>{
+                attendance.findOneAndUpdate({_id:req.params.id},{$set:req.body},{new:true},(err,data)=>{
                     if(err){
                         res.status(400).send({message:'data not update'})
                     }else{
@@ -247,7 +246,7 @@ const updateAttendanceDetails=(req,res)=>{
 
 const deleteAttendanceDetails=(req,res)=>{
     try{
-        attendance.findOne({employeeId:req.params.id,deleteFlag:'false'},(err,datas)=>{
+        attendance.findOne({EmployeeCode:req.params.id,deleteFlag:'false'},(err,datas)=>{
             if(err){
                 res.status(400).send({message:'invalid id'})
             }else{

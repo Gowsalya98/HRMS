@@ -16,7 +16,7 @@ const createLeaveApplication = async(req, res) => {
         const id=req.body.employeeId
         employee_controller.employee.findOne({_id:id},async(err,result)=>{
             console.log(result)
-            req.body.uploadDocument = `http://192.168.0.112:9022/upload/${req.file.filename}`
+            // req.body.uploadDocument = `http://192.168.0.112:9022/upload/${req.file.filename}`
            
             req.body.userId=result
             console.log(req.body.userId)
@@ -54,11 +54,8 @@ const createLeaveApplication = async(req, res) => {
     }
 }
 
-const ownerViewEmployeeLeaveStatus=(req,res)=>{
+const adminViewEmployeeLeaveStatus=(req,res)=>{
     try{
-        const token=jwt.decode(req.headers.authorization)
-        const id=token.userid
-        // console.log('line 144',id)
             leaveController.leaveApply.find({deleteFlag:"false"},(err,data)=>{
                 if(err){throw err}
                 console.log(data)
@@ -140,7 +137,7 @@ const employeeViewOurLeaveApplicationStatus=(req,res)=>{
         console.log('line 129',req.params.key)
         const token=jwt.decode(req.headers.authorization)
         const id=token.userid
-        // console.log('line 242',id)
+        
         leaveController.leaveApply.find({employeeId:id,deleteFlag:"false"},(err,data)=>{
             if(err){throw err}
             console.log('line 135',data)
@@ -241,7 +238,7 @@ const updateEmployeeMonthlyLeave=(req,res)=>{
 
 module.exports = { createLeaveApplication,acceptLeave,rejectLeave,
     employeeViewLeaveApplication,employeeViewOurLeaveApplicationStatus,
-    ownerViewEmployeeLeaveStatus,pendingLeaveDetailsCount,adminSetEmployeeMonthlyLeave,
+    adminViewEmployeeLeaveStatus,pendingLeaveDetailsCount,adminSetEmployeeMonthlyLeave,
     getEmployeeMonthlyLeave,updateEmployeeMonthlyLeave}
 
 

@@ -13,6 +13,8 @@ const createEmployee = (req, res) => {
             if (num == 0){
                 const admintoken = jwt.decode(req.headers.authorization)
                 const id = admintoken.userid
+                req.body.adminId=id
+                console.log('line 17',req.body.adminId)
                 req.body.password = await bcrypt.hash(req.body.password, 10)
                 
                 const date=new Date();
@@ -50,10 +52,11 @@ const createEmployee = (req, res) => {
                         res.status(200).send({ message: 'created successfully', data })
                     }
                 })
+            }else{
+                res.status(400).send({message:'data already exist'})
             }
             })
     } catch (err) {
-        console.log(err.message)
         res.status(500).send({ message: err.message })
     }
 }    
@@ -77,7 +80,7 @@ const login = (req, res) => {
                     }
                 } 
             })
-        } else {
+        } else if(req.body.role=='employee') {
             employee.findOne({ email: req.body.email,deleteFlag:"false"}, async (err, data) => {
                 console.log("line 68",data)
                 if (data) {
@@ -86,12 +89,14 @@ const login = (req, res) => {
                         const token = await jwt.sign({ userid: data._id }, process.env.SECRET_KEY)
                         res.status(200).send({ message: 'Login Successfull',token,data })
                     }
-                    else { res.send('invalid password') }
+                    else { res.status(400).send('invalid password') }
                 }
                 else {
                     res.send({ message: 'invalid email/password ', data})
                 }
             })
+        }else{
+            res.status(400).send({message:'unauthorized person'})
         }
     } catch (error) {
         res.status(500).send(error)
@@ -104,7 +109,8 @@ const forgotPassword = async (req, res) => {
         if (req.body.otp != null) {
             sendOtp.findOne({ otp: req.body.otp }, async (err, datas) => {
                 console.log("line 106", datas)
-                if (!datas.employeeDetails.role=='employee') {
+                if(datas!=null){
+                if (datas.userDetails.role=='employee') {
                     employee.findOne({ email: req.body.email }, async (err, data) => {
                         console.log("line 109", data)
                         if (data) {
@@ -151,6 +157,7 @@ const forgotPassword = async (req, res) => {
                         }
                     })
                 } else { res.status(400).send({ message: 'invalid otp' }) }
+            }else{res.status(400).send({ message: 'invalid datas',data:[]}) }
             })
         } else {
             employee.findOne({ email: req.body.email,deleteFlag:'false'},async (err, data) => {
@@ -236,59 +243,49 @@ const postMail = function (to, subject, text) {
         text: text,
     })
 }
-const getAllEmployee = (req, res) => {
+const getAllEmployee =async (req, res) => {
     try {
-        const adminToken = jwt.decode(req.headers.authorization)
-        const id = adminToken.userid
-        employee.find({ deleteFlag: 'false' }, (err, data) => {
-            if (err) {
-                res.status(400).send({ message: 'unauthorized' })
-            }
-            else {
-                console.log('line 188',data.length)
-                res.status(200).send( data )
-            }
-        })
+            employee.find({deleteFlag: 'false' }, (err, data) => {
+                if (err) {
+                    res.status(400).send({ message: 'data not found unauthorized',data:[] })
+                }
+                else {
+                    console.log('line 188',data.length)
+                    res.status(200).send( data )
+                }
+            })
     } catch (err) {
         res.status(500).send({ message: 'please check it again' })
     }
 }
 
-
-const employeeCount=(req,res)=>{
-    try{
-        employee.find({deleteFlag:"false"},(err,data)=>{
-            if(err) throw err
-            console.log('line 196 employee count',data.length)
-            var totalEmployeeCount=data.length
-            res.status(200).send({totalEmployeeCount:totalEmployeeCount})
-        })
-    }catch(err){
-        res.status(500).send({message:err.message})
-    }
-}
-
 const getSingleEmployee = (req, res) => {
     try {
-        // const employeetoken = jwt.decode(req.headers.authorization)
-        // const id = employeetoken.userid
-        console.log('line 201',req.params.id)
-        employee.findOne({ _id: req.params.id, deleteFlag: 'false' }, (err, data) => {
-            if (err) {
-                res.status(400).send({ message: 'unauthorized' })
-            }
-            else {
-                console.log('line 206',data)
-                res.status(200).send({ message: data })
-            }
-        })
+        if(req.headers.authorization){
+            employee.findOne({ _id: req.params.id, deleteFlag: 'false' }, (err, data) => {
+                if (err) {
+                    res.status(400).send({ message: 'invalid id' })
+                }
+                else {
+                    console.log('line 206',data)
+                    res.status(200).send({ message: data })
+                }
+            })
+        }else{
+            res.status(400).send({message:'unauthorized'})
+        }
+       
     } catch (err) {
         res.status(500).send({ message: 'please check it again' })
     }
 }
 const employeeImage=(req,res)=>{
     try{
-        req.body.image = `http://192.168.0.112:9022/upload/${req.file.filename}`
+        if(req.file==null||undefined){
+            req.body.image=''
+        }else{
+            req.body.image = `http://192.168.0.112:9022/upload/${req.file.filename}`
+        }
         image.create(req.body,(err,data)=>{
             if(err)throw err
             console.log('line 216',data)
@@ -300,7 +297,6 @@ const employeeImage=(req,res)=>{
 }
 const updateEmployee = (req, res) => {
     try {
-        console.log('line 230',req.params.id)
         employee.findOne({_id:req.params.id}, { deleteFlag: 'false' }, (err, datas) => {
             console.log("line 231",datas)
             if (datas) {
@@ -314,7 +310,7 @@ const updateEmployee = (req, res) => {
                day = '0' + day;
                var s = [day,month, year].join('/');
                 req.body.modifyDate=s;
-                employee.findOneAndUpdate({_id:req.params.id}, req.body, { new: true }, (err, data) => {
+                employee.findOneAndUpdate({_id:req.params.id}, {$set:req.body}, { new: true }, (err, data) => {
                     console.log('line 234',data)
                     if (err) {
                         res.status(400).send({ message: 'invalid id' })
@@ -335,24 +331,22 @@ const updateEmployee = (req, res) => {
 
 const deleteEmployee = (req, res) => {
     try {
-        const token = jwt.decode(req.headers.authorization)
-        const id = token.userid
-        console.log('line 248',id)
-        console.log('line 249',req.params.id)
-        employee.findOne({_id:req.params.id},{deleteFlag:'false'},(err,data)=>{
-            if(err)throw err
-            console.log('line 261',data)
-            employee.findOneAndUpdate({ _id:req.params.id }, {$set:{ deleteFlag: "true" }}, { returnOriginal: false }, (err, datas) => {
-                if (err) {
-                    res.status(400).send({ message: 'data does not deleted' })
-                }
-                else {
-                    console.log('line 254',datas)
-                    res.status(200).send({ message: 'data deleted successfully',datas})
-                }
+        const adminToken = jwt.decode(req.headers.authorization)
+        const id = adminToken.userid
+            employee.findOne({_id:req.params.id},{adminId:id},{deleteFlag:'false'},(err,data)=>{
+                if(data){
+                console.log('line 261',data)
+                employee.findOneAndUpdate({ _id:req.params.id }, {$set:{ deleteFlag: "true" }}, { returnOriginal: false }, (err, datas) => {
+                    if (err) {
+                        res.status(400).send({ message: 'data does not deleted',data:[] })
+                    }
+                    else {
+                        console.log('line 254',datas)
+                        res.status(200).send({ message: 'data deleted successfully',datas})
+                    }
+                })
+            }else{ res.status(400).send({ message: 'invalid id' })}
             })
-        })
-       
     } catch (err) {
         res.status(500).send({ message: 'please check it again' })
     }
@@ -366,7 +360,6 @@ module.exports = {
     login,
     forgotPassword,
     getAllEmployee,
-    employeeCount,
     getSingleEmployee,
     employeeImage,
     updateEmployee,

@@ -4,6 +4,14 @@ const payslipSchema=mongoose.Schema({
     companyName:String,
     companyLogo:String,
     basicPay:String,
+    monthAndYear:{
+        type:String,
+        default:''
+    },
+    lossOfPay:{
+        type:String,
+        default:''
+    },
     employeeShareOfPF:String,
     HRA:String,
     employeeShareOfESI:String,
@@ -13,6 +21,7 @@ const payslipSchema=mongoose.Schema({
     employerShareOfESI:String,
     cityCompensatory:String,
     allowance:String,
+    otherDeduction:String,
     leaveDeductions:String,
     otherAllowance:String,
     TDS:String,
@@ -21,7 +30,13 @@ const payslipSchema=mongoose.Schema({
     }
 })
 
+const updatedPayslipSchema=mongoose.Schema({
+    payslipDetails:{
+        type:Object
+    }
+})
 const payslip = mongoose.model('payslipSchema', payslipSchema)
 
+const updatedPayslip=mongoose.model('updatedPayslip',updatedPayslipSchema)
 
-module.exports={payslip}
+module.exports={payslip,updatedPayslip}
