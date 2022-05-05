@@ -10,6 +10,7 @@ const attendanceSheet = require('./route/attendenceRoute')
 const payslip=require('./route/payslip_route')
 const documentWallet=require('./route/documentWallet_route')
 const suggestionAndProblem=require('./route/suggestion_route')
+const carousal=require('./route/carousel_routes')
 
 require('./config/db_config')
 
@@ -27,6 +28,7 @@ app.use('/HRMS/attendance',attendanceSheet)
 app.use('/HRMS/payslip',payslip)
 app.use('/HRMS/documentWallet',documentWallet)
 app.use('/HRMS/suggestionAndProblem',suggestionAndProblem)
+app.use('/HRMS/carousal',carousal)
 
 app.listen(process.env.PORT, () => {
     console.log(`server is listening on the port ${process.env.PORT}`)

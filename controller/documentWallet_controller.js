@@ -4,9 +4,9 @@ const jwt=require('jsonwebtoken')
 
 const createDocumentWallet=(req,res)=>{
     try{
-        // documentWallet.countDocuments({ identityNumber: req.body.identityNumber },async(err, num) => {
-        //     console.log("line 8",num)
-        //     if (num == 0){
+        documentWallet.countDocuments({ identityNumber: req.body.identityNumber },async(err, num) => {
+            console.log("line 8",num)
+            if (num == 0){
     employee.findOne({identityNumber:req.body.identityNumber,deleteFlag:'false'},(err,datas)=>{
                 if(datas){
                 req.body.employeeDetails=datas
@@ -25,21 +25,17 @@ const createDocumentWallet=(req,res)=>{
             console.log("line 25",req.body.createdAt);
 
             documentWallet.create(req.body, (err, data) => {
-                if (err) {
-                    res.status(400).send({ message: 'your data not created something wrong' })
-                }
-                else {
+                if (err)throw err
                     console.log('line 32',data)
                     res.status(200).send({ message: 'created successfully', data })
-                }
             })
         }else{res.status(400).send({message:'please check your identity number'})}
             })
             
-        // }else{
-        //     res.status(400).send({message:'your data already exist'})
-        // }
-        // })
+        }else{
+            res.status(400).send({message:'your data already exist'})
+        }
+        })
     }catch(err){
         res.status(500).send({message:err.message})
     }
