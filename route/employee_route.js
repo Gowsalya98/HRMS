@@ -8,7 +8,7 @@ router.post('/adminAndEmployeeLogin', employee.login)
 router.post('/forgotPassword', employee.forgotPassword)
 
 router.get('/getAllEmployee', employee.getAllEmployee)
-router.get('/getSingleEmployee/:id', employee.getSingleEmployee)
+router.get('/getSingleEmployee', employee.getSingleEmployee)
 
 router.post('/image',multer.upload.single('image'),employee.employeeImage)
 

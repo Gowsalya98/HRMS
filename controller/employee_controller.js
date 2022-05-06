@@ -1,3 +1,4 @@
+const mongoose=require('mongoose')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
@@ -5,6 +6,7 @@ const {employee,sendOtp,image,randomString} = require('../model/employee_model')
 const { validationResult } = require('express-validator')
 const {organization} = require('../model/organization_model')
 const fast2sms = require('fast-two-sms')
+const { Mongoose } = require('mongoose')
 
 const createEmployee = (req, res) => {
     try {
@@ -259,24 +261,24 @@ const getAllEmployee =async (req, res) => {
     }
 }
 
-const getSingleEmployee = (req, res) => {
+const getSingleEmployee =async (req, res) => {
     try {
-        if(req.headers.authorization){
-            employee.findOne({ _id: req.params.id, deleteFlag: 'false' }, (err, data) => {
-                if (err) {
-                    res.status(400).send({ message: 'invalid id' })
+        const employeeToken=jwt.decode(req.headers.authorization)
+        if(employeeToken!=undefined){
+            const data=await employee.aggregate([{$match:{$and:[{"_id":new mongoose.Types.ObjectId(employeeToken.userid)},{"deleteFlag":'false'}]}}])
+                if (data) {
+                    res.status(400).send({ success:'true',message: 'your data',data:data })
                 }
                 else {
-                    console.log('line 206',data)
-                    res.status(200).send({ message: data })
+                    res.status(200).send({success:'false',message:'failed',data:[]})
                 }
-            })
         }else{
-            res.status(400).send({message:'unauthorized'})
+            res.status(400).send({success:'false',message:'unauthorized'})
         }
        
     } catch (err) {
-        res.status(500).send({ message: 'please check it again' })
+        console.log(err);
+        res.status(500).send({ message: 'internal server error' })
     }
 }
 const employeeImage=(req,res)=>{

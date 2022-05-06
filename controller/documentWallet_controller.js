@@ -1,6 +1,7 @@
 const {documentWallet,documentImage}=require('../model/documentWallet_model')
 const {employee}=require('../model/employee_model')
 const jwt=require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 const createDocumentWallet=(req,res)=>{
     try{
@@ -68,6 +69,23 @@ const getAllWalletData=(req,res)=>{
         res.status(500).send({message:err.message})
     }
 }
+const getSingleDocumentWallet=async(req,res)=>{
+    try{
+            if(req.params.documentId.length==24){
+            const data=await documentWallet.aggregate([{$match:{$and:[{"_id":new mongoose.Types.ObjectId(req.params.documentId)},{"deleteFlag":'false'}]}}])
+                if (data) {
+                    res.status(400).send({ success:'true',message: 'your data',data:data })
+                }
+                else {
+                    res.status(200).send({success:'false',message:'failed',data:[]})
+                }
+            }else{
+                res.status(200).send({success:'false',message:'invalid id',data:[]})
+            }
+    }catch(err){
+        res.status(500).send({ message: 'internal server error' })
+    }
+}
 
 const updateDocumentWallet=(req,res)=>{
     try{
@@ -112,5 +130,5 @@ const deleteDocumentWallet=(req,res)=>{
     }
 }
 
-module.exports={createDocumentWallet,imageUploadForDocumentWallet,getAllWalletData,
+module.exports={createDocumentWallet,imageUploadForDocumentWallet,getAllWalletData,getSingleDocumentWallet,
     updateDocumentWallet,deleteDocumentWallet,}

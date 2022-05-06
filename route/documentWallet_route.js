@@ -7,6 +7,7 @@
  router.post('/createDocumentWallet',documentWalletController.createDocumentWallet)
 
  router.get('/getAllWalletData',documentWalletController.getAllWalletData)
+ router.get('/getSingleDocumentWallet/:documentId',documentWalletController.getSingleDocumentWallet)
  
  router.put('/updateDocumentWallet/:id',documentWalletController.updateDocumentWallet)
  router.delete('/deleteDocumentWallet/:id',documentWalletController.deleteDocumentWallet)
