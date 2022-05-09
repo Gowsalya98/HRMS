@@ -1,0 +1,97 @@
+HRMS->payslip->create and read html to pdf format:
+----------   -----------    ---------- ------ -------  -------  -- ------  ----------
+const pdff  = require('html-pdf')
+const fs = require('fs')
+var pdf = require("pdf-creator-node");
+const Handlebars = require('handlebars');
+const puppeteer = require('puppeteer');
+// const PDFDocument = require('pdfkit')
+// const docu = require('pdf-lib')
+const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
+const { first, inRange } = require('lodash');
+const htmldoc = require('html-to-docx')
+var toPdf = require("custom-soffice-to-pdf")
+---------------------------------------------------------------------------------------------------------------------------
+
+How to read excel file and create and write the data from excel file:
+------  -- -------- --------- ----- ------ ----------- ------ -------- ----- ---------- ------ ------   ------
+
+ var workbook = xlsx.utils.book_new();
+        var ws = xlsx.utils.json_to_sheet(req.body);
+        xlsx.utils.book_append_sheet(workbook, ws, 'Attendence');
+        xlsx.writeFile(workbook, 'HRMS_Bio.xlsx', {type: 'file'});
+
+        var wb = xlsx.readFile('HRMS_Bio.xlsx')
+        var ws = wb.Sheets['Attendence']
+        const data = xlsx.utils.sheet_to_json(ws)
+   
+        attendence.create(data,(err,result)=>{
+            if(err) throw err
+            res.status(200).send({message:result})
+        })
+SAMPLE OR REFERENCE CODE:
+------------- ------ -------------------- ---------
+
+var workbook = xlsx.utils.book_new();
+var data = [
+    {name:"John", city: "Seattle"},
+    {name:"Mike", city: "Los Angeles"},
+    {name:"Zach", city: "New York"}
+];
+var ws = xlsx.utils.json_to_sheet(data);
+xlsx.utils.book_append_sheet(workbook, ws, "Results");
+xlsx.writeFile(workbook, 'out.xlsx', {type: 'file'});
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+connect to system:for bio-metric
+--->/home/fbadmin/->delete and paste this keyword->smb://192.168.0.59/
+fb010->username 
+F!re@2021->password
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+how to convert excel sheet datevalue into normal values:
+------ ---- ------------ --------- ---------- --------------- ------- ----------- -----------
+code:
+--------
+excelDateToJSDate(excelDate) {
+    var date = new Date(Math.round((excelDate - (25567 + 1)) * 86400 * 1000)); //excelsheetdate-jan1date*24*60*60*1000
+    var converted_date = date.toISOString().split('T')[0];
+    return converted_date;
+}
+program use:
+-------------- -----
+ var date = new Date(Math.round((m.Date- (25567 + 1)) * 86400 * 1000)).toLocaleDateString()//excelsheetdate-jan1date*24*60*60*1000
+        console.log(date);
+ m.Date=date
+               return date;
+----------------------------------------------------------------------------------------------------------------------------------
+how to calculate 2 date difference in nodejs:
+
+let firstDate = new Date("7/13/2016"),
+    secondDate = new Date("09/15/2017"),
+    timeDifference = Math.abs(secondDate.getTime() - firstDate.getTime());
+
+console.log(timeDifference);
+alert(timeDifference)
+
+If you want the number of days between the two dates...............
+
+let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+console.log(differentDays);
+alert(differentDays);
+
+ar arr=[]
+            for(var i=0;i<=differentDays;i++){
+                 const final=data[i]
+               // console.log('final',final)
+                arr.push(final)
+            }
+            console.log('f',arr);
+           res.status(200).send({data:arr})
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+

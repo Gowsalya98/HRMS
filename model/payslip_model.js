@@ -22,7 +22,7 @@ const payslipSchema=mongoose.Schema({
     cityCompensatory:String,
     allowance:String,
     otherDeduction:String,
-    leaveDeductions:String,
+   // leaveDeductions:String,
     otherAllowance:String,
     TDS:String,
     EmployeeDetails:{

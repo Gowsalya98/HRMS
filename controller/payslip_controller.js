@@ -8,32 +8,33 @@ const handleBar=require('handlebars')
 const options={"height":"900px","width":"445px"}
 const jwt=require('jsonwebtoken')
 
-const createPayslip=(req,res)=>{
+const createPayslip=async(req,res)=>{
     try{
         const adminToken=jwt.decode(req.headers.authorization)
         const id=adminToken.userid
         console.log('line 10',id)
-        organization.findOne({adminId:id,deleteFlag:"false"},(err,result)=>{
-            if(err){throw err}
-            else{
+        organization.findOne({adminId:id,deleteFlag:"false"},async(err,result)=>{
+            if(result){
             console.log('line 14',result)
             req.body.companyLogo=result.companyLogo
             req.body.companyName=result.companyName
-            employee.findOne({identityNumber:req.body.identityNumber,deleteFlag:'false'},(err,datas)=>{
-                if(err)throw err
-                console.log('line 19',datas);
-                 if(datas){
+            const datas=await employee.aggregate([{$match:{identityNumber:req.body.identityNumber}}])
+            console.log('line 19',datas);    
+            if(datas){
                      req.body.EmployeeDetails=datas
                      payslip.create(req.body,(err,data)=>{
                         if(!err){
                             console.log('line 24',data)
                             res.status(200).send({message:"payslip created successfully",data})
                         }else{
-                            res.status(400).send({message:'not created data something error'})
+                            res.status(400).send({message:'failed'})
                         }
                      })
+                 }else{
+                    res.status(400).send({message:'invalid identityNumber'})
                  }
-        })
+    }else{
+        res.status(400).send({message:'invalid token'})
     }
         })
     }catch(err){
@@ -41,22 +42,22 @@ const createPayslip=(req,res)=>{
     }
 }
 
-// const getAllPayslipDetails=(req,res)=>{
-//     try{
-//         organization.findOne({role:'admin'},(err,datas)=>{
-//             if(datas){
-//             payslip.find({},(err,data)=>{
-//                 if(err)throw err
-//                 console.log('line 46',data)
-//                 res.status(200).send(data)
-//             })
-//         }else{res.status(400).send('unauthorized person')}
-//         })
+const getAllPayslipDetails=(req,res)=>{
+    try{
+        organization.findOne({role:'admin'},(err,datas)=>{
+            if(datas){
+            payslip.find({},(err,data)=>{
+                if(err)throw err
+                console.log('line 46',data)
+                res.status(200).send(data)
+            })
+        }else{res.status(400).send('unauthorized person')}
+        })
         
-//     }catch(err){
-//         res.status(500).send({message:err.message})
-//     }
-// }
+    }catch(err){
+        res.status(500).send({message:err.message})
+    }
+}
 
 // const getSinglePaySlipDetails=async(req,res)=>{
 //     try{
@@ -149,7 +150,7 @@ const pdfCreater=(req,res)=>{
                 "designation":{"designationName":num.EmployeeDetails.designation.designationName},"monthAndYear":num.EmployeeDetails.createdAt,"lopDays":num.loseOfPay,
                 "basicPay":num.basicPay,"employeeShareOfPF":num.employeeShareOfPF,"HRA":num.HRA,"employeeShareOfESI":num.employeeShareOfESI,
                 "medicalAllowance":num.medicalAllowance,"employerShareOfPF":num.employerShareOfPF,"conveyanceAllowance":num.conveyanceAllowance,
-                "employerShareOfESI":num.employerShareOfESI,"cityCompensatory":num.cityCompensatory,"leaveDeductions":num.leaveDeductions,
+                "employerShareOfESI":num.employerShareOfESI,"cityCompensatory":num.cityCompensatory,
                 "otherAllowance":num.otherAllowance,"TDS":num.TDS,"otherDeduction":num.otherDeduction,"totalEarningCTC":num.totalEarningCTC,
                 "totalDeduction":num.totalDeduction,"netTakeHomeSalary":num.netTakeHomeSalary}
             
@@ -180,5 +181,7 @@ const pdfCreater=(req,res)=>{
 }
 
 
-module.exports={createPayslip,pdfCreater,updatePaySlipDetails,getSingleUpdatePaySlipDetails,
+module.exports={createPayslip,getAllPayslipDetails,
+    pdfCreater,updatePaySlipDetails,
+    getSingleUpdatePaySlipDetails,
     getAllUpdatedPaySlipDetails}

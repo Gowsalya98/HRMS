@@ -55,16 +55,37 @@ const deleteCarousel=async(req,res)=>{
     try{
         if(req.params.id.length==24){
             const data=await carousal.findOne({_id:req.params.id,deleteFlag:false})
+            console.log("data",data);
             if(data){
-            const datas=await carousal.findByIdAndUpdate({_id:req.params.id},{deleteFlag:'true'},{returnOriginal:false})
-            if(datas){
-                res.status(200).send({success:'true',message:'successfully deleted',data:datas})
-            }else{
-                res.status(302).send({success:'false',message:'failed to delete data',data:[]})
+                //var arrrrrr = [];
+                 var datas= data.carousalDetails.map((result)=> {   
+                      if(result._id.toString()===req.body._id.toString()){
+                        
+                    }
+                    console.log('result',result);
+                   // arrrrrr.push(result._id.toString())
+                    return result._id.toString()
+                }).indexOf(req.body._id.toString())
+                 console.log('datas',datas);        
+                 var yy =data.carousalDetails.splice(datas,1)
+                    console.log('line 71',yy);
+            //console.log(arrrrrr);
+
+ res.status(200).send({success:'true',message:'successfully delete your data',data:yy})
+
+
+            // const data=await carousal.findOne({_id:req.params.id,deleteFlag:false})
+            // if(data){
+            // const datas=await carousal.findByIdAndUpdate({_id:req.params.id},{deleteFlag:'true'},{returnOriginal:false})
+            // if(datas){
+            //     res.status(200).send({success:'true',message:'successfully deleted',data:datas})
+            // }else{
+            //     res.status(302).send({success:'false',message:'failed to delete data',data:[]})
+            // }
+        // }else{
+        //     res.status(302).send({success:'false',message:'data not found',data:[]})
+        // }
             }
-        }else{
-            res.status(302).send({success:'false',message:'data not found',data:[]})
-        }
     }else{
         res.status(400).send({success:'false',message:'invalid id'})
     }

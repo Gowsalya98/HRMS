@@ -58,29 +58,35 @@ const imageUploadForDocumentWallet=(req,res)=>{
 
 const getAllWalletData=(req,res)=>{
     try{
-        const adminToken=jwt.decode(req.headers.authorization)
-        const id=adminToken.userid
+        if(req.headers.authorization){
         documentWallet.find({deleteFlag:"false"},(err,data)=>{
             if(err)throw err
             console.log('line 58',data)
             res.status(200).send({data:data})
         })
+    }else{
+        res.status(400).send('invalid token')
+
+    }
     }catch(err){
         res.status(500).send({message:err.message})
     }
 }
 const getSingleDocumentWallet=async(req,res)=>{
     try{
-            if(req.params.documentId.length==24){
-            const data=await documentWallet.aggregate([{$match:{$and:[{"_id":new mongoose.Types.ObjectId(req.params.documentId)},{"deleteFlag":'false'}]}}])
+            if(req.params.identityNumber){
+             console.log(typeof(parseInt(req.params.identityNumber)));
+            const data=await documentWallet.  aggregate([{$match:{$and:[{"employeeDetails.identityNumber":(parseInt(req.params.identityNumber))},{"deleteFlag":'false'}]}}])
+            //findOne({"employeeDetails.identityNumber":req.params.identityNumber,deleteFlag:"false"})
                 if (data) {
-                    res.status(400).send({ success:'true',message: 'your data',data:data })
+                    console.log('line 82',data);
+                    res.status(200).send({ success:'true',message: 'your data',data:data })
                 }
                 else {
-                    res.status(200).send({success:'false',message:'failed',data:[]})
+                    res.status(400).send({success:'false',message:'failed',data:[]})
                 }
             }else{
-                res.status(200).send({success:'false',message:'invalid id',data:[]})
+                res.status(400).send({success:'false',message:'invalid id',data:[]})
             }
     }catch(err){
         res.status(500).send({ message: 'internal server error' })
