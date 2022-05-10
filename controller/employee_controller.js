@@ -263,11 +263,11 @@ const getAllEmployee =async (req, res) => {
 
 const getSingleEmployee =async (req, res) => {
     try {
-        const employeeToken=jwt.decode(req.headers.authorization)
-        if(employeeToken!=undefined){
-            const data=await employee.aggregate([{$match:{$and:[{"_id":new mongoose.Types.ObjectId(employeeToken.userid)},{"deleteFlag":'false'}]}}])
+        if(req.params.id.length==24){
+            const data=await employee.aggregate([{$match:{$and:[{"_id":new mongoose.Types.ObjectId(req.params.id)},{"deleteFlag":'false'}]}}])
                 if (data) {
-                    res.status(400).send({ success:'true',message: 'your data',data:data })
+                    console.log('line 269',data)
+                    res.status(200).send({ success:'true',message: 'your data',data:data })
                 }
                 else {
                     res.status(200).send({success:'false',message:'failed',data:[]})

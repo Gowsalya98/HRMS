@@ -18,7 +18,8 @@ const createPayslip=async(req,res)=>{
             console.log('line 14',result)
             req.body.companyLogo=result.companyLogo
             req.body.companyName=result.companyName
-            const datas=await employee.aggregate([{$match:{identityNumber:req.body.identityNumber}}])
+            const datas=await employee.findOne({identityNumber:req.body.identityNumber,deleteFlag:'false'})
+            // const datas=await employee.aggregate([{$match:{$and:[{"identityNumber":(parseInt(req.body.identityNumber))},{"deleteFlag":"false"}]}}])
             console.log('line 19',datas);    
             if(datas){
                      req.body.EmployeeDetails=datas
@@ -59,25 +60,26 @@ const getAllPayslipDetails=(req,res)=>{
     }
 }
 
-// const getSinglePaySlipDetails=async(req,res)=>{
-//     try{
-//         console.log('line 62',(parseInt(req.params.id)))
-//       const datas=await employee.aggregate([{$match:{$and:[{identityNumber:(parseInt(req.params.id))},{deleteFlag:"false"}]}}])
-//       console.log('line 64',datas); 
-//       if(datas!=null){
-//           console.log('line 66',datas[0].identityNumber);
-//       const data=await payslip.aggregate([{$match:{'EmployeeDetails.identityNumber':datas[0].identityNumber}}])
-//             if(data){
-//             console.log('line 67',data)
-//             res.status(200).send(data)
-//             }else{ res.status(400).send('invalid id')}
-//     }else{
-//         res.status(400).send('invalid id')
-//     }
-//     }catch(err){
-//         res.status(500).send({message:err.message})
-//     }
-// }
+const getSinglePaySlipDetails=async(req,res)=>{
+    try{
+       console.log('line 62',(parseInt(req.params.id)))
+       //const datas=await employee.findOne({identityNumber:req.body.identityNumber,deleteFlag:'false'})
+     const datas=await employee.aggregate([{$match:{$and:[{"identityNumber":(parseInt(req.params.id))},{"deleteFlag":"false"}]}}])
+      console.log('line 64',datas); 
+      if(datas!=null){
+          console.log('line 66',datas[0].identityNumber);
+      const data=await payslip.aggregate([{$match:{'EmployeeDetails.identityNumber':datas[0].identityNumber}}])
+            if(data){
+            console.log('line 67',data)
+            res.status(200).send(data)
+            }else{ res.status(400).send('invalid id')}
+    }else{
+        res.status(400).send('invalid id')
+    }
+    }catch(err){
+        res.status(500).send({message:err.message})
+    }
+}
 
 const updatePaySlipDetails=(req,res)=>{
     try{
@@ -181,7 +183,7 @@ const pdfCreater=(req,res)=>{
 }
 
 
-module.exports={createPayslip,getAllPayslipDetails,
+module.exports={createPayslip,getAllPayslipDetails,getSinglePaySlipDetails,
     pdfCreater,updatePaySlipDetails,
     getSingleUpdatePaySlipDetails,
     getAllUpdatedPaySlipDetails}
